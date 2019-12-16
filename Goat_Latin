@@ -1,0 +1,9 @@
+def toGoatLatin(self, S: str) -> str:
+    sentence = S.split(' ')
+    for i in range(len(sentence)):
+        if sentence[i][0] in ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']:
+            sentence[i] = sentence[i] + "ma"
+        else:
+            sentence[i] = sentence[i][1:] + sentence[i][0] + "ma"
+        sentence[i] = sentence[i] + 'a' * (i+1)
+    return ' '.join(sentence)

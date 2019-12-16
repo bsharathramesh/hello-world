@@ -1,0 +1,42 @@
+def isAlienSorted(words,order):
+		length = len(words)
+		counter = 0
+		for i in range(0,length-1, 1):
+            tmp1 = words[i][0]
+            tmp2 = words[i+1][0]
+            # if the first letter in the word is same.
+            if tmp1 == tmp2:
+                l1 = len(words[i])
+                l2 = len(words[i+1])
+                x = min(l1,l2)
+                for j in range(0,x,1):
+                    tmp11 = words[i][j]
+                    tmp22 = words[i+1][j]
+                    order11 = order.index(tmp11)
+                    order22 = order.index(tmp22)
+                    if order11 <= order22:
+                        counter = 1
+                    else:
+                        counter = 0
+                        return False
+                if counter == 1:
+                    if len(words[i]) <= len(words[i+1]):
+                        counter = 1
+                        continue
+                    else:
+                        counter = 0
+                        return False
+            # if the first letter in the word is not same.
+            else:
+                order1 = order.index(tmp1)
+                order2 = order.index(tmp2)
+                if order1 < order2:
+                    counter = 1
+                    continue
+                else:
+                    counter = 0
+                    return False
+        if counter == 1:
+            return True
+        else:
+            return False

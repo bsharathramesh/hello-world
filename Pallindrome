@@ -1,0 +1,11 @@
+# Pallindrome
+import re
+def isPalindrome(a):
+    s = a.lower()
+    s = ''.join(i for i in s if i.isalnum()) 
+    print(s)
+    return s == ''.join(s[::-1]) 
+    
+a = "A man, a plan, a canal: Panama"
+result = isPalindrome(a)
+print(result)

@@ -1,0 +1,20 @@
+def lengthOfLongestSubstring(s):
+    x=""
+    m=0
+    for i in s:
+        if i in x:
+            x=x[x.index(i)+1:]
+        x+=i
+        m=max(m,len(x))
+    return m
+    
+def lengthOfLongestSubstring(s):
+    """3. Longest Substring Without Repeating Characters"""
+    pool, head, max_len = dict(), 0, 0
+    for cur in range(len(s)):
+        x = s[cur]
+        if x in pool: 
+            head = max(head, pool[x] + 1)
+        pool[x] = cur
+        max_len = max(max_len, cur-head+1)            
+    return max_len

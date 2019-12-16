@@ -1,0 +1,145 @@
+class Node:
+    def __init__(self,data):
+        self.data = data
+        self.next = None
+    def getData(self):
+        return self.data
+    def setNext (self, next):
+        self.next = next
+    def getNext(self):
+        return self.next
+    def hasNext(self):
+        return self.next != None
+
+# Class for Linked List 
+class LinkedList:
+    length = 0
+    traversal = ""
+    def __init__(self):
+        self.head = None
+    
+    # inserting the element at the first element
+    def insertAtBeginning(self,data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+            self.length += 1
+            return
+        else:
+            new_node.next = self.head
+            self.head = new_node
+            self.length += 1
+
+    # insert the element at the last element
+    def insertAtEnd(self,data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+            self.length += 1
+            return
+        else:
+            current = self.head
+            while(current.next != None):
+                current = current.next
+            
+            current.next = new_node
+            self.length += 1
+
+    # inserting the data after the following linked list - based on the data
+    def insertAfterData(self,data,data1):
+        new_node = Node(data)
+        current = self.head
+        while(current.data != data1):
+            current = current.next
+        new_node.next = current.next
+        current.next = new_node
+        self.length += 1
+    
+    def insertAtPos(self,data,pos):
+        if (pos > self.length or pos < 0):
+            print("Cannot be inserting in this position.")
+            return None
+        else:
+            if pos == 0:
+                self.insertAtBeginning(data)
+                self.length += 1
+            else:
+                if pos == self.length:
+                    self.insertAtEnd(data)
+                    self.length += 1
+                else:
+                    new_node = Node(data)
+                    count = 1
+                    current = self.head
+                    while count < pos-1:
+                        current = current.next
+                        count += 1
+                    new_node.next = current.next
+                    current.next = new_node
+                    self.length += 1
+    
+    def printList(self):
+        current = self.head
+        self.traversal = ""
+        while (current):
+            self.traversal += (str(current.data) + " - ")
+            current = current.next
+        return self.traversal
+
+    def merge_sorted_list(self, llist):
+        p = self.head 
+        q = llist.head
+        s = None
+        
+        if not p:
+            return q
+        if not q:
+            return p
+
+        if p and q:
+            if p.data <= q.data:
+                s = p 
+                p = s.next
+            else:
+                s = q
+                q = s.next
+            new_head = s 
+    
+        while p and q:
+            if p.data <= q.data:
+                s.next = p 
+                s = p 
+                p = s.next
+            else:
+                s.next = q
+                s = q
+                q = s.next
+        if not p:
+            s.next = q 
+        if not q:
+            s.next = p 
+    
+        return new_head
+
+llist1 = LinkedList()
+llist2 = LinkedList()
+llist1.insertAtEnd(1)
+llist1.insertAtEnd(5)
+llist1.insertAtEnd(7)
+llist1.insertAtEnd(9)
+llist1.insertAtEnd(10)
+
+llist2.insertAtEnd(2)
+llist2.insertAtEnd(3)
+llist2.insertAtEnd(4)
+llist2.insertAtEnd(6)
+llist2.insertAtEnd(8)
+
+output1 = llist1.printList()
+output2 = llist2.printList()
+print(output1)
+print(output2)
+
+llist1.merge_sorted_list(llist2)
+output3 = llist1.printList()
+print(output3)

@@ -1,0 +1,105 @@
+class Node:
+    def __init__(self,data=None):
+        self.data = data
+        self.left = None
+        self.right = None
+
+class BST:
+    def __init__(self):
+        self.root = None
+    
+    def insert(self,data):
+        if self.root is None:
+            self.root = Node(data)
+        else:
+            self._insert(data,self.root)
+    
+    def _insert(self,data,cur_node):
+        if data < cur_node.data:
+            if cur_node.left is None:
+                cur_node.left = Node(data)
+            else:
+                self._insert(data,cur_node.left)
+        elif data > cur_node.data:
+            if cur_node.right is None:
+                cur_node.right = Node(data)
+            else:
+                self._insert(data,cur_node.right)
+        else:
+            print("The value is already present in the tree")
+
+    def find(self,data):
+        if self.root:
+            is_found = self._find(data,self.root)
+            if is_found:
+                return True
+            return False
+        else:
+            return None
+    
+    def _find(self,data,cur_node):
+        if data > cur_node.data and cur_node.right:
+            return self._find(data,cur_node.right)
+        elif data < cur_node.data and cur_node.left:
+            return self._find(data,cur_node.left)
+        if data == cur_node.data:
+            return True
+    
+    def print(self,type):
+        if type == "inorder":
+            return self.in_order_traversal(self.root, "")
+        elif type == "preorder":
+            return self.pre_order_traversal(self.root, "")
+        elif type == "postorder":
+            return self.post_order_traversal(self.root, "")
+        else:
+            print("Enter the valid value for traversal type")
+            return False
+
+    def in_order_traversal(self,start,traversal):
+        # in_order traversal LDR
+        if start:
+            traversal = self.in_order_traversal(start.left,traversal)
+            traversal += (str(start.data) + "-")
+            traversal = self.in_order_traversal(start.right,traversal)
+        return traversal
+    
+    def pre_order_traversal(self,start,traversal):
+        # pre_order traversal DLR
+        if start:
+            traversal += (str(start.data) + "-")
+            traversal = self.pre_order_traversal(start.left,traversal)
+            traversal = self.pre_order_traversal(start.right,traversal)
+        return traversal
+
+    def post_order_traversal(self,start,traversal):
+        # post_order traversal LRD
+        if start:
+            traversal = self.pre_order_traversal(start.left,traversal)
+            traversal = self.pre_order_traversal(start.right,traversal)
+            traversal += (str(start.data) + "-")
+        return traversal
+
+    def height(self, node):
+        if node is None:
+            return -1
+        left_height = self.height(node.left)
+        right_height = self.height(node.right)
+        return 1+max(left_height,right_height)
+
+
+bst = BST()
+bst.insert(4)
+bst.insert(2)
+bst.insert(8)
+bst.insert(5)
+bst.insert(10)
+print(bst.find(10))
+output = bst.print("inorder")
+print(output)
+output1 = bst.print("preorder")
+print(output1)
+output2 = bst.print("postorder")
+print(output2)
+height = bst.height(bst.root)
+print(height)
